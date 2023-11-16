@@ -1,10 +1,10 @@
-﻿@model LearnManagement.Web.Data.LeaveType
+﻿@model LeaveTypeVM
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Create a new leave type</h1>
 
 <h4>LeaveType</h4>
 <hr />
@@ -17,29 +17,18 @@
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
                 <label asp-for="DefaultDays" class="control-label"></label>
                 <input asp-for="DefaultDays" class="form-control" />
                 <span asp-validation-for="DefaultDays" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
-                <label asp-for="DateCreated" class="control-label"></label>
-                <input asp-for="DateCreated" class="form-control" />
-                <span asp-validation-for="DateCreated" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DateModified" class="control-label"></label>
-                <input asp-for="DateModified" class="form-control" />
-                <span asp-validation-for="DateModified" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+                <a asp-action="Index" class="btn btn-dark">Back to List</a>
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
