@@ -6,23 +6,28 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LearnManagement.Web.Data;
+using AutoMapper;
+using LearnManagement.Web.Models;
 
 namespace LearnManagement.Web.Controllers
 {
     public class LeaveTypesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper mapper;
 
-        public LeaveTypesController(ApplicationDbContext context)
+        public LeaveTypesController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            this.mapper = mapper;
         }
 
         // GET: LeaveTypes
         public async Task<IActionResult> Index()
         {
+            var leaveTypes = mapper.Map<List<LeaveTypeVM>>(await _context.LeaveTypes.ToListAsync());
             return _context.LeaveTypes != null ?
-                        View(await _context.LeaveTypes.ToListAsync()) :
+                        View(leaveTypes) :
                         Problem("Entity set 'ApplicationDbContext.LeaveTypes'  is null.");
         }
 
