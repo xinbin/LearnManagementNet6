@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using LearnManagement.Web.Configurations;
+using LearnManagement.Web.Contracts;
+using LearnManagement.Web.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,10 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<Employee>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+// Changes we made to make it available in the rest of the code.
+// Add Scoped allows you to use the collection while you need it, then it releases.
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<ILeaveTypeRepository, LeaveTypeRepository>();
 builder.Services.AddAutoMapper(typeof(MapperConfig));
 
 builder.Services.AddControllersWithViews();
