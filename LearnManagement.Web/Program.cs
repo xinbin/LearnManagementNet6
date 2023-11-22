@@ -5,6 +5,9 @@ using AutoMapper;
 using LearnManagement.Web.Configurations;
 using LearnManagement.Web.Contracts;
 using LearnManagement.Web.Repositories;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using LearnManagement.Web.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +18,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<Employee>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddTransient<IEmailSender>(s => new EmailSender("localhost", 25, "noreply@leavemanagement.com"));
 
 // Changes we made to make it available in the rest of the code.
 // Add Scoped allows you to use the collection while you need it, then it releases.

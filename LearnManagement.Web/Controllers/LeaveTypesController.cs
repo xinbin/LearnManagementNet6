@@ -9,9 +9,12 @@ using LearnManagement.Web.Data;
 using AutoMapper;
 using LearnManagement.Web.Models;
 using LearnManagement.Web.Contracts;
+using Microsoft.AspNetCore.Authorization;
+using LearnManagement.Web.Constants;
 
 namespace LearnManagement.Web.Controllers
 {
+    [Authorize(Roles = Roles.Adminstration)]
     public class LeaveTypesController : Controller
     {
         private readonly ILeaveTypeRepository leaveTypeRepository;
