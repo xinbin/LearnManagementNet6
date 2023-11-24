@@ -10,5 +10,6 @@
         // This is not creating a foreign key but we are still uniting the data?
         // When to make a FK and when it's not needed?\
         public string EmployeeId { get; set; }
+        public int Period { get; set; }
     }
 }
