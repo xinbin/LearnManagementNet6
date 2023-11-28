@@ -27,6 +27,7 @@ builder.Services.AddTransient<IEmailSender>(s => new EmailSender("localhost", 25
 // Add Scoped allows you to use the collection while you need it, then it releases.
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<ILeaveTypeRepository, LeaveTypeRepository>();
+builder.Services.AddScoped<ILeaveAllocationRepository, LeaveAllocationRepository>();
 builder.Services.AddAutoMapper(typeof(MapperConfig));
 
 builder.Services.AddControllersWithViews();

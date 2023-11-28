@@ -1,6 +1,7 @@
 ﻿using LearnManagement.Web.Configurations.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using LearnManagement.Web.Models;
 
 namespace LearnManagement.Web.Data
 {
@@ -23,6 +24,5 @@ namespace LearnManagement.Web.Data
 
         public DbSet<LeaveType> LeaveTypes { get; set; }
         public DbSet<LeaveAllocation> LeaveAllocations { get; set; }
-
     }
 }
