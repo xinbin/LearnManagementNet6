@@ -40,26 +40,6 @@ namespace LearnManagement.Web.Controllers
             return View(model);
         }
 
-        // GET: EmployeeController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: EmployeeController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
         // GET: EmployeeController/EditAllocation/5
         public async Task<ActionResult> EditAllocation(int Id)
@@ -82,20 +62,10 @@ namespace LearnManagement.Web.Controllers
                 // First check the model state..
                 if (ModelState.IsValid)
                 {
-                    // Do the thing, in this case update.
-                    // First get original value of data to check against any modifications.
-                    var leaveAllocation = await leaveAllocationRepository.GetAsync(model.Id);
-                    if (leaveAllocation == null)
+                    if (await leaveAllocationRepository.UpdateEmployeeAllocation(model))
                     {
-                        return NotFound();
+                        return RedirectToAction(nameof(ViewAllocation), new { id = model.EmployeeId });
                     }
-                    // Change the current state, manually imho, why? - oh because in this case there are specific fields only that we
-                    // Are targeting.
-                    leaveAllocation.Period = model.Period;
-                    leaveAllocation.NumberOfDays = model.NumberOfDays;
-                    await leaveAllocationRepository.UpdateAsync(leaveAllocation);
-
-                    return RedirectToAction(nameof(ViewAllocation), new { id = model.EmployeeId });
                 }
             }
             catch (Exception ex)
@@ -108,27 +78,6 @@ namespace LearnManagement.Web.Controllers
             model.LeaveType = mapper.Map<LeaveTypeVM>(await leaveTypeRepository.GetAsync(model.LeaveTypeId));
             // Specifically take the return view out of the catch.
             return View(model);
-        }
-
-        // GET: EmployeeController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: EmployeeController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }

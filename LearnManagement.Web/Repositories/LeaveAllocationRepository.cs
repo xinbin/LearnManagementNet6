@@ -30,6 +30,7 @@ namespace LearnManagement.Web.Repositories
         {
             return await context.LeaveAllocations.AnyAsync(q => q.EmployeeId == employeeId && q.LeaveTypeId == leaveTypeId && q.Period == period);
         }
+
         public async Task LeaveAllocation(int leaveTypeId)
         {
             var employees = await userManager.GetUsersInRoleAsync(Roles.User);
@@ -88,6 +89,23 @@ namespace LearnManagement.Web.Repositories
             model.Employee = mapper.Map<EmployeeListVM>(await userManager.FindByIdAsync(allocation.EmployeeId));
 
             return model;
+        }
+
+        public async Task<bool> UpdateEmployeeAllocation(LeaveAllocationEditVM model)
+        {
+            // Do the thing, in this case update.
+            // First get original value of data to check against any modifications.
+            var leaveAllocation = await GetAsync(model.Id);
+            if (leaveAllocation == null)
+            {
+                return false;
+            }
+            // Change the current state, manually imho, why? - oh because in this case there are specific fields only that we
+            // Are targeting.
+            leaveAllocation.Period = model.Period;
+            leaveAllocation.NumberOfDays = model.NumberOfDays;
+            await UpdateAsync(leaveAllocation);
+            return true;
         }
     }
 }
